@@ -145,3 +145,33 @@ uv.lock
 !requirements-*.txt
 !pyproject.toml
 !poetry.lock
+
+# ---------------------------------------------------------------------------
+# Poids d'IA — dossier dédié, pour éviter toute collision avec le code
+# ---------------------------------------------------------------------------
+/ai-models/
+/ml-models/
+/poids/
+
+# Si tu gardes le nom générique, ancre-le à la racine
+/models/
+/model/
+/weights/
+/checkpoints/
+
+# ---------------------------------------------------------------------------
+# Modèles de données — CODE SOURCE, toujours versionné
+# ---------------------------------------------------------------------------
+!**/src/models/
+!**/src/models/**
+!**/app/Models/
+!**/app/Models/**
+!**/src/entities/
+!**/src/entities/**
+!**/src/schemas/
+!**/src/schemas/**
+!**/*.model.ts
+!**/*.entity.ts
+!**/*.schema.ts
+!**/*.dto.ts
+!backend/prisma/schema.prisma
