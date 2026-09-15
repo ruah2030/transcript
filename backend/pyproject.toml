@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "atelier-backend"
+version = "5.0.0"
+description = "Atelier de transcription et de traduction locale"
+requires-python = ">=3.11"
+
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "httpx>=0.27",
+    "python-multipart>=0.0.12",
+]
+
+[project.optional-dependencies]
+# Moteurs NMT. Séparés parce que torch pèse lourd et n'est utile qu'à la
+# conversion des modèles Opus-MT, pas à l'inférence.
+nmt = [
+    "ctranslate2>=4.5",
+    "sentencepiece>=0.2",
+    "transformers>=4.45",
+]
+# Transcription audio. faster-whisper s'appuie sur CTranslate2, déjà
+# présent avec l'extra « nmt » — il n'y a donc pas de seconde pile
+# d'inférence à installer.
+transcription = [
+    "faster-whisper>=1.0",
+    # Pas de borne basse utile ici : ce qui compte est la fraîcheur, pas un
+    # minimum. YouTube casse yt-dlp régulièrement et seules les versions
+    # récentes suivent. Mets-le à jour dès qu'une extraction échoue :
+    #   python -m pip install -U --pre yt-dlp
+    "yt-dlp",
+    # Deuxième voie d'accès aux sous-titres YouTube, par les endpoints
+    # timedtext. Indépendante de yt-dlp, et souvent fonctionnelle quand
+    # celui-ci est bloqué.
+    "youtube-transcript-api>=1.0",
+]
+conversion = ["torch>=2.4"]
+dev = ["pytest>=8.3", "pytest-asyncio>=0.24", "ruff>=0.7"]
+
+# Sans cette section, setuptools tente une découverte automatique et
+# s'arrête net : il voit `app`, `ressources` et `modeles` à la racine sans
+# savoir lequel est le code. On le lui dit explicitement.
+[tool.setuptools]
+packages = ["app"]
+include-package-data = false
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

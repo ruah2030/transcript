@@ -1,0 +1,387 @@
+{
+  "nom": "Calques de traduction automatique et homophones",
+  "version": 2,
+  "note": "Deux sections. 'regles' est appliqué automatiquement. 'signalements' n'est jamais appliqué : le script compte les occurrences et affiche la raison, parce que le bon choix dépend de la phrase.",
+  "regles": [
+    {
+      "categorie": "Homophone systématique",
+      "motif": "\\bdessins?\\s+(de\\s+Dieu|du\\s+Seigneur|de\\s+son\\s+cœur)",
+      "remplacement": "dessein $1",
+      "regex": true,
+      "casse": false,
+      "note": "design/purpose traduit en 'dessin' au lieu de 'dessein'"
+    },
+    {
+      "categorie": "Homophone systématique",
+      "motif": "\\b(le|ce|son|mon|votre|leur)\\s+dessin\\b(?!\\s+(?:animé|technique|industriel))",
+      "remplacement": "$1 dessein",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Homophone systématique",
+      "motif": "\\b(les|ces|ses|mes|vos|leurs|des)\\s+dessins\\b",
+      "remplacement": "$1 desseins",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Homophone systématique",
+      "motif": "\\bà\\s+dessin\\b",
+      "remplacement": "à dessein",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Homophone systématique",
+      "motif": "\\bdes\\s+seins\\s+de\\s+Dieu",
+      "remplacement": "desseins de Dieu",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Homophone",
+      "motif": "renvers[ée]\\s+tes\\s+hôtels",
+      "remplacement": "renversé tes autels",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Homophone",
+      "motif": "changer\\s+de\\s+cape\\b",
+      "remplacement": "changer de cap",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Homophone",
+      "motif": "de\\s+la\\s+fausse\\b(?=\\s|\\.|,)",
+      "remplacement": "de la fosse",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Homophone",
+      "motif": "objets\\s+chauds\\s+du\\s+poil",
+      "remplacement": "objets chauds du poêle",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Homophone",
+      "motif": "dangers\\s+du\\s+poil",
+      "remplacement": "dangers du poêle",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Homophone",
+      "motif": "mes\\s+voix\\s+(sont|ne\\s+sont)",
+      "remplacement": "mes voies $1",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Homophone",
+      "motif": "vos\\s+voix\\s+(sont|ne\\s+sont)",
+      "remplacement": "vos voies $1",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Homophone",
+      "motif": "pour\\s+leur\\s+voix\\s+et\\s+je\\s+leur\\s+rendrai",
+      "remplacement": "pour leurs voies et je leur rendrai",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Homophone",
+      "motif": "la\\s+pression\\s+des\\s+p[aè]ères",
+      "remplacement": "la pression des pairs",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Homophone",
+      "motif": "accolades\\s+de\\s+(vos|tes)\\s+pères",
+      "remplacement": "accolades de $1 pairs",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Homophone",
+      "motif": "éloges\\s+et\\s+la\\s+reconnaissance\\s+de\\s+vos\\s+pères",
+      "remplacement": "éloges et la reconnaissance de vos pairs",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Calque",
+      "motif": "le\\s+être\\s+tout\\s+et\\s+finir\\s+tout\\s+de\\s+la\\s+vie",
+      "remplacement": "l’alpha et l’oméga de la vie",
+      "regex": true,
+      "casse": false,
+      "note": "be-all and end-all"
+    },
+    {
+      "categorie": "Calque",
+      "motif": "transpirer\\s+les\\s+petites\\s+choses",
+      "remplacement": "s’en faire pour des détails",
+      "regex": true,
+      "casse": false,
+      "note": "don't sweat the small stuff"
+    },
+    {
+      "categorie": "Calque",
+      "motif": "être\\s+hang\\s+quelqu[’']un",
+      "remplacement": "devenir quelqu’un",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Calque",
+      "motif": "suicide\\s+des\\s+entreprises",
+      "remplacement": "suicide collectif",
+      "regex": true,
+      "casse": false,
+      "note": "corporate suicide"
+    },
+    {
+      "categorie": "Calque",
+      "motif": "objectif\\s+d[’']entreprise|objectifs?\\s+de\\s+l[’']entreprise\\s+et\\s+(individuel|l[’']objectif\\s+individuel)",
+      "remplacement": "but collectif",
+      "regex": true,
+      "casse": false,
+      "note": "corporate purpose"
+    },
+    {
+      "categorie": "Calque",
+      "motif": "étrein(?:es|te)\\s+corporatives?",
+      "remplacement": "étreinte collective",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Calque",
+      "motif": "l[’']acclamation\\s+des\\s+autres\\s+et\\s+notre\\s+évaluation",
+      "remplacement": "l’acclamation des autres et notre propre jugement",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Calque",
+      "motif": "au\\s+pris\\s+avec|pris\\s+avec\\s+une\\s+fin\\s+intérieure",
+      "remplacement": "aux prises avec",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Calque",
+      "motif": "à\\s+la\\s+mercie\\s+des",
+      "remplacement": "à la merci des",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Calque",
+      "motif": "livret\\s+bancaire",
+      "remplacement": "compte en banque",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Calque",
+      "motif": "la\\s+course\\s+effrain[ée]e",
+      "remplacement": "la course effrénée",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Calque",
+      "motif": "existence\\s+cauchemardesque",
+      "remplacement": "existence de cauchemar",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Mot mal reconnu",
+      "motif": "applaudissements\\s+Tony\\s+Truan",
+      "remplacement": "applaudissements tonitruants",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Mot mal reconnu",
+      "motif": "\\bun\\s+ya\\b|\\ble\\s+yode\\b|\\bdu\\s+ya\\b",
+      "remplacement": "le yacht",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Mot mal reconnu",
+      "motif": "tuyaux\\s+d[’']orges",
+      "remplacement": "tuyaux d’orgue",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Mot mal reconnu",
+      "motif": "un\\s+org\\s+dans\\s+le\\s+salon",
+      "remplacement": "un orgue dans le salon",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Mot mal reconnu",
+      "motif": "être\\s+bouché\\s+ouvrier",
+      "remplacement": "être boucher ou ouvrier",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Mot mal reconnu",
+      "motif": "il\\s+cause\\s+le\\s+kiting",
+      "remplacement": "elle cause le meurtre",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Mot mal reconnu",
+      "motif": "l[’']enté\\s+entière",
+      "remplacement": "l’entité entière",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Mot mal reconnu",
+      "motif": "l[’']apoger\\b",
+      "remplacement": "l’apogée",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Mot mal reconnu",
+      "motif": "[Vv]augras",
+      "remplacement": "veaux gras",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Mot mal reconnu",
+      "motif": "arbre\\s+à\\s+Genè",
+      "remplacement": "genêt",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Mot mal reconnu",
+      "motif": "un\\s+allaitement\\s+audible",
+      "remplacement": "un halètement audible",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Mot mal reconnu",
+      "motif": "chè\\s+femme",
+      "remplacement": "chère femme",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Mot mal reconnu",
+      "motif": "j[’']ai\\s+gmis",
+      "remplacement": "gémit",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Mot mal reconnu",
+      "motif": "en\\s+col\\s+blanc",
+      "remplacement": "en col blanc",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Mot mal reconnu",
+      "motif": "Loomi\\s+connaissait",
+      "remplacement": "L’homme connaissait",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Mot mal reconnu",
+      "motif": "maisons\\s+loin\\s+de\\s+chez\\s+nous",
+      "remplacement": "mais sommes loin de chez nous",
+      "regex": true,
+      "casse": false
+    },
+    {
+      "categorie": "Mot mal reconnu",
+      "motif": "plus\\s+inconscients\\s+mais\\s+pas\\s+plus\\s+sages",
+      "remplacement": "plus instruits mais pas plus sages",
+      "regex": true,
+      "casse": false
+    }
+  ],
+  "signalements": [
+    {
+      "motif": "\\boin\\b|\\boint\\b",
+      "raison": "« oin » = « oignit » / « oint » selon le temps. À conjuguer à la main."
+    },
+    {
+      "motif": "\\bcorporati(?:f|ve|ves|fs)\\b",
+      "raison": "« corporate » ne se traduit pas par « corporatif » : lire « collectif » ou « de l’entreprise »."
+    },
+    {
+      "motif": "\\bquientent\\b|\\bsoutend\\b|\\bhaltait\\b|\\bairent\\b",
+      "raison": "Résidus de reconnaissance vocale sans équivalent évident. À réécrire d’après le sens."
+    },
+    {
+      "motif": "\\bGN\\b|\\bERV\\b|\\bNKJV\\b|\\bAKV\\b",
+      "raison": "Sigles de versions bibliques anglaises. Remplacer par la version française citée (Segond, BDS…) ou supprimer."
+    },
+    {
+      "motif": "\\b(la|sa|une|de\\s+la)\\s+mer\\b",
+      "raison": "« mer » est souvent « mère » : remis à la mère, le lit de la mère, la Terre comme une mère. Chaque occurrence se tranche au contexte."
+    },
+    {
+      "motif": "\\bfin\\b",
+      "raison": "« fin » cache parfois le verbe oindre (oint / oins). Les cas identifiés sont corrigés automatiquement ; vérifie les autres."
+    },
+    {
+      "motif": "\\bM[ée]tro\\b",
+      "raison": "« Métro » désigne tantôt l'auteur (Myles Munroe), tantôt Jéthro. Seuls les cas explicites sont corrigés."
+    },
+    {
+      "motif": "\\bp[êé]cheur",
+      "raison": "« pêcheur » (poisson) contre « pécheur » (péché). Le contexte religieux impose presque toujours « pécheur »."
+    },
+    {
+      "motif": "\\b(but|objectif)\\b",
+      "raison": "Le texte alterne « but » et « objectif » sans raison. Choisis un terme et impose-le partout."
+    },
+    {
+      "motif": "\\b(?:ÈRE|ERE|ERV)\\b",
+      "raison": "Sigle de version biblique non identifié. AV = King James, GN = Good News. À remplacer par la version française citée ou à supprimer."
+    },
+    {
+      "motif": "6\\s*000\\s+ans",
+      "raison": "Salomon se situe à environ 3 000 ans, pas 6 000. Chiffre à recouper avec l'original."
+    },
+    {
+      "motif": "multipli[ée]e?\\s+par\\s+10|25\\s+à\\s+44\\s+ans",
+      "raison": "Statistiques sur la dépression : chiffres à recouper avec l'édition d'origine avant toute diffusion."
+    },
+    {
+      "categorie": "style",
+      "motif": "\\bEssentiellement,",
+      "raison": "Calque de « Essentially ». Alterner avec « Au fond », « En somme », « Autrement dit »."
+    },
+    {
+      "categorie": "style",
+      "motif": "\\bPar\\s+conséquent,",
+      "raison": "Répété à l'excès. Varier : « Donc », « D'où », « Il s'ensuit que »."
+    }
+  ]
+}

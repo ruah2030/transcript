@@ -1,0 +1,1 @@
+Je suis un modèle de langage développé grâce à une collaboration entre Mistral AI et NVIDIA.

@@ -1,0 +1,27 @@
+services:
+  backend:
+    build: ./backend
+    ports: ["8000:8000"]
+    volumes:
+      - ./backend/ressources:/app/ressources
+      - ./backend/modeles:/app/modeles      # modèles CTranslate2 convertis
+      - cache:/app/.cache
+    environment:
+      # host.docker.internal : Ollama tourne sur la machine hôte, pas ici.
+      ATELIER_LLM_URL: http://host.docker.internal:11434
+      ATELIER_LLM_MODELE: hy-mt-1.8b
+      ATELIER_LANGUAGETOOL_URL: http://languagetool:8010
+      ATELIER_CT2_THREADS: "0"
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    depends_on: [languagetool]
+
+  languagetool:
+    image: silviof/docker-languagetool
+    expose: ["8010"]
+    environment:
+      # 14 Go au total : on borne LanguageTool pour laisser la place aux modèles.
+      Java_Xms: 256m
+      Java_Xmx: 1g
+
+volumes:
+  cache:

@@ -1,0 +1,40 @@
+{
+  "nom": "Glossaire de traduction — modèle générique",
+  "version": 2,
+  "note": "Injecté dans chaque requête au modèle. La section 'terminologie' impose un rendu constant d'un bout à l'autre du document ; 'ne_pas_traduire' protège ce qui doit rester intact ; 'calques_a_bannir' liste les tournures à éviter dans la langue d'arrivée. Adapte chaque section à ta paire de langues et à ton domaine.",
+
+  "terminologie": [
+    { "source": "purpose", "rendu": "dessein (intention de Dieu) / but (raison d'être d'une chose)", "jamais": "dessin" },
+    { "source": "fulfillment", "rendu": "épanouissement, accomplissement", "jamais": "remplissage" },
+    { "source": "corporate", "rendu": "collectif, communautaire", "jamais": "corporatif" },
+    { "source": "stewardship", "rendu": "intendance, gérance", "jamais": "" },
+    { "source": "accountability", "rendu": "responsabilité, reddition de comptes", "jamais": "accountabilité" },
+    { "source": "the Word", "rendu": "la Parole", "jamais": "le mot" },
+    { "source": "Gentiles", "rendu": "les nations, les païens", "jamais": "les gentils" }
+  ],
+
+  "ne_pas_traduire": [
+    "noms de personnes, de marques et de produits",
+    "extraits de code, noms de variables, chemins de fichiers",
+    "identifiants, références de documents, numéros de version",
+    "adresses postales et adresses électroniques"
+  ],
+
+  "calques_a_bannir": [
+    "Essentiellement, → Au fond, / En somme, / Autrement dit,",
+    "Par conséquent, (répété) → Donc, / D'où, / Il s'ensuit que",
+    "adresser un problème → traiter, aborder un problème",
+    "supporter quelqu'un → soutenir quelqu'un",
+    "opportunité → occasion (sauf sens économique)",
+    "définitivement → assurément, sans aucun doute",
+    "éventuellement → finalement, à terme"
+  ],
+
+  "consignes_de_style": [
+    "Phrases construites selon la syntaxe de la langue d'arrivée, pas de celle du texte de départ.",
+    "Le passif se rend souvent par une tournure active ou pronominale en français.",
+    "Les répétitions voulues par l'auteur sont conservées ; celles produites par la machine sont supprimées.",
+    "Le vouvoiement est employé pour s'adresser au lecteur.",
+    "Les citations bibliques suivent le format Livre chapitre.verset et se recopient depuis une version établie."
+  ]
+}

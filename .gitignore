@@ -1,0 +1,147 @@
+# ---------------------------------------------------------------------------
+# Backend
+# ---------------------------------------------------------------------------
+# Dépendances et build
+/backend/node_modules/
+/backend/dist/
+/backend/build/
+/backend/.turbo/
+/api/node_modules/
+/api/dist/
+
+# NestJS / AdonisJS
+/backend/.adonisjs/
+/backend/tmp/
+/backend/ace-manifest.json
+*.tsbuildinfo
+
+# Prisma — le schéma se versionne, pas le client généré ni la base locale
+/backend/prisma/generated/
+/backend/prisma/*.db
+/backend/prisma/*.db-journal
+/backend/prisma/migrations/dev/
+!/backend/prisma/schema.prisma
+!/backend/prisma/migrations/
+
+# Bases de données locales
+*.sqlite
+*.sqlite3
+*.db-shm
+*.db-wal
+/data/
+/postgres-data/
+/mysql-data/
+
+# Fichiers téléversés par les utilisateurs
+/backend/uploads/
+/backend/storage/
+/uploads/
+/public/uploads/
+
+# Secrets — jamais dans un dépôt
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+*.crt
+*.p12
+*.keystore
+/secrets/
+credentials.json
+service-account*.json
+
+# ---------------------------------------------------------------------------
+# Frontend
+# ---------------------------------------------------------------------------
+/frontend/node_modules/
+/frontend/dist/
+/frontend/build/
+/frontend/.output/
+/frontend/.nuxt/
+/frontend/.vite/
+/frontend/.turbo/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+.vercel/
+
+# Vue / Vite
+.vite/
+vite.config.*.timestamp-*
+
+# Styles générés
+/frontend/src/**/*.css.map
+.postcssrc.js.bak
+
+# Tests end-to-end
+/playwright-report/
+/test-results/
+/cypress/videos/
+/cypress/screenshots/
+/cypress/downloads/
+
+# Analyse de bundle
+stats.html
+bundle-analyzer-report.html
+
+# ---------------------------------------------------------------------------
+# Docker et déploiement
+# ---------------------------------------------------------------------------
+docker-compose.override.yml
+docker-compose.*.local.yml
+/docker/volumes/
+.docker/
+*.env.docker
+
+# Traefik — la configuration se versionne, pas les certificats
+/traefik/acme.json
+/traefik/certs/
+/letsencrypt/
+
+# ---------------------------------------------------------------------------
+# Gestionnaires de paquets
+# ---------------------------------------------------------------------------
+# Choisis-en UN et versionne-le : le verrou garantit des installations
+# reproductibles. Ignore les deux autres.
+yarn.lock
+pnpm-lock.yaml
+# package-lock.json   ← décommente si tu utilises yarn ou pnpm
+
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+.pnp.*
+
+# ---------------------------------------------------------------------------
+# Environnements virtuels Python
+# ---------------------------------------------------------------------------
+.venv/
+.venv*/
+venv/
+venv*/
+env/
+ENV/
+env.bak/
+venv.bak/
+.virtualenv/
+virtualenv/
+pyvenv.cfg
+pip-wheel-metadata/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Gestionnaires modernes
+.pdm-python
+.pdm-build/
+__pypackages__/
+.python-version
+uv.lock
+!requirements.txt
+!requirements-*.txt
+!pyproject.toml
+!poetry.lock

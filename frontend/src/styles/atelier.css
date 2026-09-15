@@ -1,0 +1,783 @@
+/* ============================================================================
+   Atelier — établi de correcteur.
+
+   Direction : la fiche de travail d'imprimerie. Le chrome est froid et
+   sans-serif, le texte est chaud et serif. On ne les confond jamais :
+   l'interface est l'atelier, le texte est le manuscrit.
+
+   L'accent est le bleu du crayon de correcteur — celui qui, en photogravure,
+   ne se reproduisait pas à l'impression. Il marque les instructions, jamais
+   le contenu.
+   ========================================================================= */
+
+:root {
+  /* Encres */
+  --encre:        #16181c;
+  --encre-2:      #565d66;
+  --encre-3:      #8d949c;
+
+  /* Supports */
+  --papier:       #f4f6f8;
+  --surface:      #ffffff;
+  --surface-2:    #fafbfc;
+  --trait:        #dde2e8;
+  --trait-fort:   #c3cad3;
+
+  /* Crayon bleu — instructions, sélection, actions */
+  --bleu:         #1f4fa8;
+  --bleu-vif:     #2c62c8;
+  --bleu-voile:   #e9f0fc;
+
+  /* Corrections et états */
+  --rouge:        #a8241c;
+  --rouge-voile:  #fbeeed;
+  --ocre:         #7d5400;
+  --ocre-voile:   #fbf3e0;
+  --vert:         #1a6146;
+  --vert-voile:   #e7f2ed;
+
+  /* Typographie — trois rôles, trois familles */
+  --chrome: "Inter", ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+  --texte: "Charter", "Bitstream Charter", "Iowan Old Style", "Palatino Linotype",
+           Palatino, Georgia, serif;
+  --chiffre: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Mono",
+             Menlo, Consolas, monospace;
+
+  --rayon: 3px;
+  --rayon-l: 5px;
+  --ombre: 0 1px 2px rgb(22 24 28 / 6%), 0 1px 1px rgb(22 24 28 / 4%);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--encre);
+  font: 14px/1.5 var(--chrome);
+  font-feature-settings: "cv05", "ss01";
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--bleu);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.atelier {
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: 0 20px 56px;
+}
+
+/* ------------------------------------------------------------------ fiche */
+
+.fiche {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 16px 0 14px;
+  border-bottom: 1px solid var(--trait);
+}
+
+.fiche__identite { display: flex; flex-direction: column; gap: 1px; }
+
+.fiche__eyebrow {
+  font: 600 9.5px/1 var(--chrome);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bleu);
+}
+
+.fiche h1 {
+  margin: 0;
+  font: 600 17px/1.15 var(--chrome);
+  letter-spacing: -0.018em;
+}
+
+.fiche__mesures {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.mesure { font-size: 12px; color: var(--encre-2); }
+.mesure em {
+  font: 500 13px var(--chiffre);
+  font-style: normal;
+  color: var(--encre);
+}
+
+.fanion {
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: var(--bleu-voile);
+  color: var(--bleu);
+  font: 600 10px/1.6 var(--chrome);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.fiche__actions { display: flex; gap: 6px; }
+
+/* ------------------------------------------------- rail (élément signature)
+
+   La fiche de travail : sept mains, dans l'ordre où elles interviennent.
+   Le numéro est en chiffres tabulaires parce que c'est une référence, pas
+   une décoration — on lit « passe 03 », pas « troisième étape ». */
+
+.rail {
+  margin: 14px 0 18px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.rail__liste {
+  display: flex;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: max-content;
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon-l);
+  background: var(--surface);
+  box-shadow: var(--ombre);
+}
+
+.rail__case { flex: 1 1 0; min-width: 132px; }
+.rail__case + .rail__case { border-left: 1px dashed var(--trait); }
+
+.jeton {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  width: 100%;
+  height: 100%;
+  padding: 9px 13px 10px;
+  border: none;
+  border-radius: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.12s ease;
+}
+.rail__case:first-child .jeton { border-radius: var(--rayon-l) 0 0 var(--rayon-l); }
+.rail__case:last-child .jeton { border-radius: 0 var(--rayon-l) var(--rayon-l) 0; }
+
+.jeton:hover:not(:disabled) { background: var(--surface-2); }
+.jeton:disabled { opacity: 0.42; cursor: not-allowed; }
+
+.jeton__numero {
+  font: 500 10px/1 var(--chiffre);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: var(--encre-3);
+}
+.jeton__nom {
+  font: 550 13px/1.25 var(--chrome);
+  letter-spacing: -0.008em;
+}
+.jeton__etat {
+  font-size: 10.5px;
+  line-height: 1.35;
+  color: var(--encre-3);
+}
+
+/* La passe courante porte un filet bleu en pied — le trait du correcteur. */
+.jeton--active::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2px;
+  background: var(--bleu);
+}
+.jeton--active { background: var(--bleu-voile); }
+.jeton--active .jeton__numero { color: var(--bleu); }
+
+.jeton--faite .jeton__numero { color: var(--vert); }
+.jeton--faite .jeton__etat { color: var(--vert); }
+.jeton--faite .jeton__numero::after { content: " ✓"; }
+
+.jeton--avertie .jeton__etat { color: var(--ocre); }
+.jeton--occupee .jeton__etat { color: var(--bleu); }
+
+/* ------------------------------------------------------------------ établi */
+
+.etabli {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 296px;
+  gap: 18px;
+  align-items: start;
+}
+.etabli--large { grid-template-columns: minmax(0, 1fr); }
+
+/* Deux plans côte à côte + volet, en traduction seulement. */
+.etabli:has(.plan + .plan) {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 296px;
+}
+.etabli--large:has(.plan + .plan) {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+@media (max-width: 1180px) {
+  .etabli,
+  .etabli:has(.plan + .plan),
+  .etabli--large:has(.plan + .plan) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .volet { position: static !important; }
+}
+
+.plan { display: flex; flex-direction: column; gap: 9px; min-width: 0; }
+
+.plan__entete {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 19px;
+}
+.plan__entete h2 {
+  margin: 0;
+  font: 600 10px/1 var(--chrome);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--encre-2);
+}
+.indication {
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--encre-3);
+  text-align: right;
+}
+
+/* La feuille : c'est le manuscrit, donc serif, généreux, chaud. */
+.feuille {
+  width: 100%;
+  min-height: 52vh;
+  padding: 18px 22px;
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon-l);
+  background: var(--surface);
+  box-shadow: var(--ombre);
+  color: var(--encre);
+  font: 15.5px/1.75 var(--texte);
+  resize: vertical;
+}
+.feuille::placeholder { color: var(--encre-3); font-style: italic; }
+.feuille:focus {
+  outline: none;
+  border-color: var(--bleu);
+  box-shadow: 0 0 0 3px var(--bleu-voile);
+}
+.feuille:disabled { background: var(--surface-2); color: var(--encre-2); }
+
+/* ---------------------------------------------------------------- contrôles */
+
+.barre { display: flex; flex-wrap: wrap; gap: 6px; }
+
+button {
+  padding: 6px 12px;
+  border: 1px solid var(--trait-fort);
+  border-radius: var(--rayon);
+  background: var(--surface);
+  color: var(--encre);
+  font: 500 12.5px/1.45 var(--chrome);
+  cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+button:hover:not(:disabled) { border-color: var(--encre-3); background: var(--surface-2); }
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+button.primaire {
+  background: var(--bleu);
+  border-color: var(--bleu);
+  color: #fff;
+  font-weight: 550;
+}
+button.primaire:hover:not(:disabled) {
+  background: var(--bleu-vif);
+  border-color: var(--bleu-vif);
+}
+
+button.lien {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--bleu);
+  font-size: 11.5px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+button.lien:hover:not(:disabled) { background: none; color: var(--bleu-vif); }
+
+button.bascule { color: var(--encre-2); }
+
+input[type="text"], input:not([type]), select {
+  padding: 5px 8px;
+  border: 1px solid var(--trait-fort);
+  border-radius: var(--rayon);
+  background: var(--surface);
+  color: var(--encre);
+  font: 12.5px var(--chrome);
+  width: 100%;
+}
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--bleu);
+  box-shadow: 0 0 0 3px var(--bleu-voile);
+}
+
+/* ------------------------------------------------------------------- volet */
+
+.volet {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: sticky;
+  top: 14px;
+  max-height: calc(100vh - 28px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.volet__bloc, .panneau {
+  padding: 13px 14px 15px;
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon-l);
+  background: var(--surface);
+  box-shadow: var(--ombre);
+}
+
+.volet__bloc h3, .panneau h3 {
+  margin: 0 0 9px;
+  font: 600 9.5px/1 var(--chrome);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--encre-2);
+}
+
+.panneau { display: flex; flex-direction: column; gap: 16px; }
+.panneau__bloc { display: flex; flex-direction: column; gap: 7px; }
+.panneau__bloc h3 { margin: 0; }
+.panneau__titre {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.aide {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--encre-2);
+}
+.aide--alerte {
+  padding: 7px 9px;
+  border-left: 2px solid var(--ocre);
+  border-radius: 0 var(--rayon) var(--rayon) 0;
+  background: var(--ocre-voile);
+  color: var(--encre);
+}
+
+.segmente { display: flex; }
+.segmente button { flex: 1; border-radius: 0; padding: 5px 4px; font-size: 11.5px; }
+.segmente button:first-child { border-radius: var(--rayon) 0 0 var(--rayon); }
+.segmente button:last-child { border-radius: 0 var(--rayon) var(--rayon) 0; }
+.segmente button + button { border-left: none; }
+.segmente button.actif {
+  background: var(--bleu);
+  border-color: var(--bleu);
+  color: #fff;
+}
+
+.moteurs { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+
+.moteur {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: 8px 10px;
+  text-align: left;
+  line-height: 1.35;
+}
+.moteur__entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 12.5px;
+}
+.moteur__duree {
+  font: 500 10.5px var(--chiffre);
+  font-style: normal;
+  color: var(--bleu);
+}
+.moteur__detail { font-size: 10.5px; color: var(--encre-3); }
+.moteur__paires {
+  font: 9.5px var(--chiffre);
+  color: var(--encre-3);
+  letter-spacing: 0.02em;
+}
+.moteur--actif { background: var(--bleu-voile); border-color: var(--bleu); }
+.moteur--incompatible { opacity: 0.34; }
+.moteur--absent { opacity: 0.6; }
+
+.remede {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-start;
+  padding: 7px 10px 9px;
+  margin-top: -4px;
+  border: 1px solid var(--trait);
+  border-top: none;
+  border-radius: 0 0 var(--rayon) var(--rayon);
+  background: var(--surface-2);
+}
+.remede__commande {
+  margin: 0;
+  padding: 7px 9px;
+  width: 100%;
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon);
+  background: var(--surface);
+  font: 10px/1.55 var(--chiffre);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.paire { display: flex; align-items: center; gap: 7px; }
+.paire span { color: var(--encre-3); }
+
+.case {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.case input { width: auto; }
+
+/* -------------------------------------------------------------- historique */
+
+.historique { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+
+.historique__ligne {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid transparent;
+  background: none;
+  text-align: left;
+}
+.historique__ligne:hover:not(:disabled) {
+  background: var(--bleu-voile);
+  border-color: var(--bleu);
+}
+.historique__heure {
+  font: 10px var(--chiffre);
+  font-variant-numeric: tabular-nums;
+  color: var(--encre-3);
+  flex-shrink: 0;
+}
+.historique__corps { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.historique__corps strong { font-size: 12px; font-weight: 550; }
+.historique__corps em { font-style: normal; font-size: 10.5px; color: var(--encre-2); }
+.historique__action {
+  margin-left: auto;
+  font-size: 10.5px;
+  color: var(--bleu);
+  opacity: 0;
+  flex-shrink: 0;
+}
+.historique__ligne:hover:not(:disabled) .historique__action { opacity: 1; }
+
+/* ------------------------------------------------------------ progression */
+
+.progression {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--bleu);
+  border-radius: var(--rayon-l);
+  background: var(--bleu-voile);
+}
+.progression__entete, .progression__pied {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11.5px;
+}
+.progression__etat { font-weight: 600; }
+.progression__pied {
+  color: var(--encre-2);
+  font-family: var(--chiffre);
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+}
+.jauge { height: 3px; border-radius: 2px; background: #c6d5ee; overflow: hidden; }
+.jauge__barre { height: 100%; background: var(--bleu); transition: width 0.25s ease; }
+
+/* ---------------------------------------------------------------- alerte */
+
+.alerte {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 11px 14px;
+  margin-bottom: 14px;
+  border: 1px solid var(--rouge);
+  border-left-width: 3px;
+  border-radius: var(--rayon-l);
+  background: var(--rouge-voile);
+}
+.alerte__corps { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.alerte__corps strong { font-size: 13px; }
+.alerte__detail {
+  margin: 0;
+  font: 11px/1.5 var(--chiffre);
+  white-space: pre-wrap;
+  color: var(--encre-2);
+}
+
+/* ----------------------------------------------------------- composition */
+
+.composition { display: flex; flex-direction: column; gap: 11px; }
+
+.composition__reglages {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 9px;
+}
+.composition__reglages label { display: flex; flex-direction: column; gap: 3px; }
+.composition__reglages span {
+  font: 600 9.5px/1 var(--chrome);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--encre-2);
+}
+
+.composition__apercu {
+  width: 100%;
+  height: 62vh;
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon-l);
+  background: #fff;
+  box-shadow: var(--ombre);
+}
+.composition__source {
+  width: 100%;
+  min-height: 40vh;
+  padding: 12px 14px;
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon-l);
+  background: var(--surface);
+  font: 11.5px/1.6 var(--chiffre);
+  resize: vertical;
+}
+
+/* -------------------------------------------------------------- relevé */
+
+.releve {
+  margin-top: 26px;
+  padding-top: 16px;
+  border-top: 1px solid var(--trait);
+}
+.releve > h2 {
+  margin: 0 0 13px;
+  font: 600 10px/1 var(--chrome);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--encre-2);
+}
+
+.rapport {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+.rapport section { min-width: 0; }
+.rapport h4 { margin: 0 0 7px; font-size: 12.5px; font-weight: 600; }
+
+.vide { color: var(--encre-3); font-size: 12px; line-height: 1.55; margin: 0; }
+
+.chiffres { display: flex; flex-wrap: wrap; gap: 18px; margin: 0 0 10px; }
+.chiffres div { display: flex; flex-direction: column; gap: 1px; }
+.chiffres dt {
+  font: 600 9px/1 var(--chrome);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--encre-3);
+}
+.chiffres dd {
+  margin: 0;
+  font: 500 17px/1.1 var(--chiffre);
+  font-variant-numeric: tabular-nums;
+}
+
+.alertes, .signalements, .doutes, .sections, .regles {
+  margin: 0; padding: 0; list-style: none;
+  display: grid; gap: 4px; font-size: 11.5px;
+}
+.alertes li { padding: 7px 10px; border-radius: 0 var(--rayon) var(--rayon) 0; line-height: 1.5; }
+.alertes__attention { background: var(--ocre-voile); border-left: 2px solid var(--ocre); }
+.alertes__info { background: var(--surface-2); border-left: 2px solid var(--trait-fort); }
+
+.signalements li, .doutes li {
+  display: flex; flex-direction: column; gap: 1px;
+  padding: 6px 9px;
+  border-radius: var(--rayon);
+  background: var(--surface);
+  border: 1px solid var(--trait);
+}
+.doutes { max-height: 250px; overflow-y: auto; scrollbar-width: thin; }
+
+.sections li, .regles li {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 3px 0;
+  border-bottom: 1px dotted var(--trait);
+}
+.regles code { font: 10px var(--chiffre); word-break: break-all; }
+.regles em, .sections em {
+  font-style: normal;
+  font-family: var(--chiffre);
+  font-size: 10px;
+  color: var(--encre-3);
+}
+
+details { margin-top: 7px; }
+summary {
+  cursor: pointer;
+  font-size: 11.5px;
+  color: var(--bleu);
+  font-weight: 500;
+}
+code {
+  padding: 1px 4px;
+  border-radius: 2px;
+  background: var(--surface-2);
+  border: 1px solid var(--trait);
+  font: 11px var(--chiffre);
+}
+
+/* ----------------------------------------------------------- passe source */
+
+.source { display: flex; flex-direction: column; gap: 11px; }
+
+.source__saisie { display: flex; gap: 6px; }
+.source__saisie input { flex: 1; padding: 7px 10px; font-size: 13px; }
+
+.source__reglages {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 9px;
+}
+.source__reglages label { display: flex; flex-direction: column; gap: 3px; }
+.source__reglages span {
+  font: 600 9.5px/1 var(--chrome);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--encre-2);
+}
+
+.media {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 11px 13px;
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon-l);
+  background: var(--surface);
+  box-shadow: var(--ombre);
+}
+.media__entete { display: flex; flex-direction: column; gap: 2px; }
+.media__entete strong { font-size: 13.5px; line-height: 1.35; }
+.media__meta {
+  font: 10.5px var(--chiffre);
+  color: var(--encre-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* La voie prévue est l'information décisive : deux secondes ou vingt
+   minutes. Elle est colorée par ce qu'elle coûte, pas par sa qualité. */
+.media__voie {
+  margin: 0;
+  padding: 7px 10px;
+  border-left: 2px solid;
+  border-radius: 0 var(--rayon) var(--rayon) 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+.media__voie--sous_titres_humains {
+  border-color: var(--vert);
+  background: var(--vert-voile);
+}
+.media__voie--sous_titres_auto {
+  border-color: var(--bleu);
+  background: var(--bleu-voile);
+}
+.media__voie--transcription {
+  border-color: var(--ocre);
+  background: var(--ocre-voile);
+}
+
+.pistes {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+  max-height: 150px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.pistes li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 2px 0;
+  border-bottom: 1px dotted var(--trait);
+  font-size: 11px;
+}
+.pistes em {
+  font-style: normal;
+  color: var(--encre-3);
+  font-size: 10.5px;
+}
+
+/* Attente sans avancement mesurable : un va-et-vient plutôt qu'une barre
+   figée à zéro, qui se lit comme une panne. */
+.jauge--indeterminee .jauge__barre {
+  width: 35%;
+  animation: va-et-vient 1.3s ease-in-out infinite;
+}
+
+@keyframes va-et-vient {
+  0%   { margin-left: -35%; }
+  100% { margin-left: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jauge--indeterminee .jauge__barre { animation: none; width: 100%; opacity: 0.5; }
+}
