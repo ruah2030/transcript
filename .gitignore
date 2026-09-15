@@ -154,10 +154,8 @@ uv.lock
 /poids/
 
 # Si tu gardes le nom générique, ancre-le à la racine
-/models/
+/backend/modeles/
 /model/
 /weights/
 /checkpoints/
 
-!**/app/models/
-!**/app/models/**
