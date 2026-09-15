@@ -159,19 +159,5 @@ uv.lock
 /weights/
 /checkpoints/
 
-# ---------------------------------------------------------------------------
-# Modèles de données — CODE SOURCE, toujours versionné
-# ---------------------------------------------------------------------------
-!**/src/models/
-!**/src/models/**
-!**/app/Models/
-!**/app/Models/**
-!**/src/entities/
-!**/src/entities/**
-!**/src/schemas/
-!**/src/schemas/**
-!**/*.model.ts
-!**/*.entity.ts
-!**/*.schema.ts
-!**/*.dto.ts
-!backend/prisma/schema.prisma
+!**/app/models/
+!**/app/models/**
