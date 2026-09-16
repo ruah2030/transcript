@@ -155,6 +155,8 @@ uv.lock
 
 # Si tu gardes le nom générique, ancre-le à la racine
 /backend/modeles/
+/backend/modeles/*
+!/backend/modeles/.gitkeep
 /model/
 /weights/
 /checkpoints/
